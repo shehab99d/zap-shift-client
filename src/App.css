@@ -1,0 +1,4 @@
+.no-shake {
+  animation: none !important;
+  transform: none !important;
+}
