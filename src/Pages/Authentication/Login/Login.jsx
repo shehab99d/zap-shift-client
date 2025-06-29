@@ -1,12 +1,17 @@
 // import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../../hooks/useAuth';
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { FcGoogle } from 'react-icons/fc';
 // import { AuthContext } from '../../../context/AuthContext/AuthContext';
 
 const Login = () => {
     const navigate = useNavigate()
+    const location = useLocation()
+    console.log(location);
+    const from = location.state?.from || '/';
+    // const from = location.state?.from || '/';
+    
     // const { user, loading, signIn, createUser } = useContext(AuthContext);
     const { createUser, user } = useAuth();
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -21,7 +26,8 @@ const Login = () => {
         createUser(data.email, data.password)
             .then(result => {
                 console.log(result.user);
-                navigate('/')
+                // navigate('/')
+                navigate(from)
             })
             .catch(error => {
                 console.error(error.message);

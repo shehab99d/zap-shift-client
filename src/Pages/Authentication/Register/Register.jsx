@@ -1,20 +1,23 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { FcGoogle } from 'react-icons/fc';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 
 
 
 const Login = () => {
     const navigate = useNavigate()
+    const location = useLocation();
+    const from = location.state?.from || '/';
     const { googleSignIn } = useAuth();
 
     const handleGoogleLogin = () => {
         googleSignIn()
             .then(result => {
                 console.log(result);
-                navigate('/')
+                // navigate('/')
+                navigate(from)
             })
             .catch(error => {
                 console.error(error);
