@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { FcGoogle } from 'react-icons/fc';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
+import useAxios from '../../../hooks/useAxios';
 
 
 
@@ -11,12 +12,23 @@ const Login = () => {
     const location = useLocation();
     const from = location.state?.from || '/';
     const { googleSignIn } = useAuth();
+    const axiosInstance = useAxios();
 
     const handleGoogleLogin = () => {
         googleSignIn()
-            .then(result => {
+            .then(async (result) => {
+                const user = result.user;
                 console.log(result);
-                // navigate('/')
+
+                const userInfo = {
+                    email: user.email,
+                    role: 'user', // default role
+                    creation_date: new Date().toISOString(),
+                    last_logged_in: new Date().toISOString()
+                }
+
+                const res = await axiosInstance.post('/api/user', userInfo)
+                console.log('user updateInfo', res.data);
                 navigate(from)
             })
             .catch(error => {

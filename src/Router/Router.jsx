@@ -14,6 +14,10 @@ import MyParcels from "../Pages/Dashboard/MyParcels/MyParcels";
 import Payment from "../Pages/Dashboard/Payment/Payment";
 import PaymentHistory from "../Pages/Dashboard/PaymentHistory";
 import TrackParcel from "../Pages/Dashboard/TrackParcel";
+import BeARider from "../Pages/BeARider/BeARider";
+import PendingRiders from "../Pages/Dashboard/pandingRiders/PandingRiders";
+import ActiveRiders from "../Pages/Dashboard/ActiveRiders/ActiveRiders";
+import MakeAdmin from "../Pages/MakeAdmin/MakeAdmin";
 
 export const router = createBrowserRouter([
   {
@@ -35,7 +39,13 @@ export const router = createBrowserRouter([
           <SendParcel></SendParcel>
         </PrivateRoute>,
         loader: () => fetch('/bd-districts.json')
+      },
+      {
+        path: 'beARider',
+        element: <PrivateRoute><BeARider /></PrivateRoute>,
+        loader: () => fetch('/bd-districts.json').then(res => res.json())
       }
+
     ]
   },
   {
@@ -73,6 +83,19 @@ export const router = createBrowserRouter([
       {
         path: '/dashboard/track',
         element: <TrackParcel></TrackParcel>
+      },
+      {
+        path: '/dashboard/pendingRiders',
+        element: <PendingRiders></PendingRiders>
+      },
+      {
+        path: '/dashboard/activeRiders',
+        element: <ActiveRiders></ActiveRiders>
+      },
+      {
+        path: '/dashboard/makeAdmin',
+        element: <MakeAdmin></MakeAdmin>
+        
       }
     ]
   }
